@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/Dun2901/Nodejs-pro/issues"
   },
-  "homepage": "https://github.com/Dun2901/Nodejs-pro#readme"
+  "homepage": "https://github.com/Dun2901/Nodejs-pro#readme",
+  "dependencies": {
+    "express": "5.0.1"
+  }
 }
