@@ -34,6 +34,7 @@
   },
   "homepage": "https://github.com/Dun2901/Nodejs-pro#readme",
   "dependencies": {
+    "dotenv": "16.4.7",
     "express": "5.0.1"
   },
   "devDependencies": {
