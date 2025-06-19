@@ -15,9 +15,48 @@
 </head>
 
 <body>
-    <h1>Hello from ejs</h1>
-    <!-- <img src="/images/hoidanit.png" alt="My Photo"> -->
-    <a href="/create-user" class="btn btn-warning">Create a new user</a>
+    <div style="margin: 25px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>List Users: </h1>
+            <div>
+                <a href="/create-user" class="btn btn-warning">Create a new user</a>
+            </div>
+        </div>
+        <hr>
+        <div>
+            <table class="table table-hover table-bordered">
+                <thead>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </thead>
+                <tbody>
+                    <% users.forEach( function (users) { %>
+                        <tr>
+                            <td>
+                                <%= users.id %>
+                            </td>
+                            <td>
+                                <%= users.name %>
+                            </td>
+                            <td>
+                                <%= users.email %>
+                            </td>
+                            <td>
+                                <%= users.address %>
+                            </td>
+                            <td>
+                                <button class="btn btn-danger">Delete</button>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 </body>
 
 </html>
