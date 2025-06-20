@@ -1,4 +1,4 @@
-import getConnection from "../config/db";
+import getConnection from "config/db";
 
 const handleCreateUser = async (fullName: string, email: string, address: string) => {
     // insert into database
