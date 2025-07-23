@@ -3,6 +3,7 @@ import {
     getCreateUserPage, getHomePage, postCreateUser, postDeleteUser,
     getViewUser, postUpdateUser
 } from "controllers/user.controllers";
+import { getDashboardPage } from "controllers/admin/dashboard.controllers";
 
 const router = express.Router();
 
@@ -13,6 +14,9 @@ const webRoutes = (app: Express) => {
     router.post("/handle-delete-user/:id", postDeleteUser);
     router.get("/handle-view-user/:id", getViewUser);
     router.post("/handle-update-user", postUpdateUser);
+
+    // admin routes
+    router.get("/admin", getDashboardPage);
 
     app.use("/", router);
 };
