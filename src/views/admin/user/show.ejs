@@ -58,11 +58,10 @@
                                                 </td>
                                                 <td>
                                                     <div style="display: flex; gap: 10px;">
-                                                        <form action="/handle-view-user/<%= users.id %>" method="get">
+                                                        <form action="/admin/view-user/<%= users.id %>" method="get">
                                                             <button type="submit" class="btn btn-warning">View</button>
                                                         </form>
-                                                        <form action="/handle-delete-user/<%= users.id %>"
-                                                            method="post">
+                                                        <form action="/admin/delete-user/<%= users.id %>" method="post">
                                                             <button type="submit" class="btn btn-danger">Delete</button>
                                                         </form>
                                                     </div>
