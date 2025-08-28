@@ -10,9 +10,7 @@ const router = express.Router();
 
 const webRoutes = (app: Express) => {
     router.get("/", getHomePage);
-    router.post("/handle-create-user", postCreateUser);
 
-    router.post("/handle-update-user", postUpdateUser);
 
     // admin routes
     router.get("/admin", getDashboardPage);
@@ -21,6 +19,7 @@ const webRoutes = (app: Express) => {
     router.post("/admin/handle-create-user", fileUploadMiddleware("avatar"), postCreateUser);
     router.post("/admin/delete-user/:id", postDeleteUser);
     router.get("/admin/view-user/:id", getViewUser);
+    router.post("/admin/update-user", fileUploadMiddleware("avatar"), postUpdateUser);
 
 
     router.get("/admin/product", getAdminProductPage);
