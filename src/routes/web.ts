@@ -23,6 +23,7 @@ import {
   postUpdateProduct,
 } from "controllers/admin/product.controller";
 import { getLoginPage, getRegisterPage, postRegister } from "controllers/client/auth.controller";
+import passport from "passport";
 
 const router = express.Router();
 
@@ -30,6 +31,14 @@ const webRoutes = (app: Express) => {
   router.get("/", getHomePage);
   router.get("/product/:id", getProductPage);
   router.get("/login", getLoginPage);
+  router.post(
+    "/login",
+    passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/login",
+    }),
+  );
+
   router.get("/register", getRegisterPage);
   router.post("/register", postRegister);
 
