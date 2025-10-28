@@ -1,42 +1,61 @@
 import { prisma } from "config/client";
 import { ACCOUNT_TYPE } from "config/constant";
-import { hashPassword } from "services/user.service";
+import { comparePassword, hashPassword } from "services/user.service";
 
 const isEmailExist = async (email: string) => {
-    const user = await prisma.user.findUnique({
-        where: { username: email }
-    });
+  const user = await prisma.user.findUnique({
+    where: { username: email },
+  });
 
-    if (user) { return true; }
-    return false;
+  if (user) {
+    return true;
+  }
+  return false;
 };
 
-const registerNewUser = async (
-    fullName: string,
-    email: string,
-    password: string
-) => {
-    const newPassword = await hashPassword(password);
+const registerNewUser = async (fullName: string, email: string, password: string) => {
+  const newPassword = await hashPassword(password);
 
-    const userRole = await prisma.role.findUnique({
-        where: { name: "USER" }
+  const userRole = await prisma.role.findUnique({
+    where: { name: "USER" },
+  });
+
+  if (userRole) {
+    await prisma.user.create({
+      data: {
+        username: email,
+        password: newPassword,
+        fullName: fullName,
+        accountType: ACCOUNT_TYPE.SYSTEM,
+        roleId: userRole.id,
+      },
     });
-
-    if (userRole) {
-        await prisma.user.create({
-            data: {
-                username: email,
-                password: newPassword,
-                fullName: fullName,
-                accountType: ACCOUNT_TYPE.SYSTEM,
-                roleId: userRole.id
-            }
-        });
-    } else {
-        throw new Error("User Role không tồn tại.");
-    };
+  } else {
+    throw new Error("User Role không tồn tại.");
+  }
 };
 
-export {
-    isEmailExist, registerNewUser
-}
+const handleLogin = async (username: string, password: string, callback: any) => {
+  // Check user exist in db
+  const user = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+  if (!user) {
+    // Throw error
+    // throw new Error (`Username: ${username} not found`)
+    return callback(null, false, { message: `Username: ${username} not found` });
+  }
+
+  // Compare password
+  const isMatch = await comparePassword(password, user.password);
+  if (!isMatch) {
+    //  throw new Error (`Invalid password`)
+    return callback(null, false, { message: `Invalid password` });
+  }
+
+  return callback(null, user);
+};
+
+export { isEmailExist, registerNewUser, handleLogin };
