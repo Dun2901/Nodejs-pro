@@ -29,10 +29,14 @@ app.use(
       maxAge: 7 * 24 * 60 * 60 * 1000, // ms
     },
     secret: "a santa at nasa",
-    resave: true,
-    saveUninitialized: true,
+    // Forces session save even if unchanged
+    resave: false,
+
+    // Saves unmodified sessions
+    saveUninitialized: false,
     store: new PrismaSessionStore(new PrismaClient(), {
-      checkPeriod: 2 * 60 * 1000, //ms
+      // Clears expired session every 1 day
+      checkPeriod: 1 * 24 * 60 * 60 * 1000, //ms
       dbRecordIdIsSessionId: true,
       dbRecordIdFunction: undefined,
     }),
