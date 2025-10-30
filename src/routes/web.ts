@@ -26,6 +26,7 @@ import {
   getLoginPage,
   getRegisterPage,
   getSuccessRedirectPage,
+  postLogout,
   postRegister,
 } from "controllers/client/auth.controller";
 import passport from "passport";
@@ -46,6 +47,8 @@ const webRoutes = (app: Express) => {
       failureMessage: true,
     }),
   );
+
+  router.post("/logout", postLogout);
 
   router.get("/register", getRegisterPage);
   router.post("/register", postRegister);
