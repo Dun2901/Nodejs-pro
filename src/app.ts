@@ -65,7 +65,8 @@ initDatabase();
 
 // Handle 404 not found
 app.use((req, res) => {
-  res.send("404 not found");
+  // res.send("404 not found");
+  res.render("status/404.ejs");
 });
 
 app.listen(PORT, () => {

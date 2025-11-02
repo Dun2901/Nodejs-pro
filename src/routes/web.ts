@@ -38,7 +38,7 @@ const webRoutes = (app: Express) => {
   router.get("/", getHomePage);
   router.get("/success-redirect", getSuccessRedirectPage);
   router.get("/product/:id", getProductPage);
-  router.get("/login", isLogin, getLoginPage);
+  router.get("/login", getLoginPage);
   router.post(
     "/login",
     passport.authenticate("local", {
@@ -54,7 +54,7 @@ const webRoutes = (app: Express) => {
   router.post("/register", postRegister);
 
   // admin routes
-  router.get("/admin", isAdmin, getDashboardPage);
+  router.get("/admin", getDashboardPage);
   router.get("/admin/user", getAdminUserPage);
   router.get("/admin/create-user", getCreateUserPage);
   router.post("/admin/handle-create-user", fileUploadMiddleware("avatar"), postCreateUser);
@@ -80,7 +80,7 @@ const webRoutes = (app: Express) => {
 
   router.get("/admin/order", getAdminOrderPage);
 
-  app.use("/", router);
+  app.use("/", isAdmin, router);
 };
 
 export default webRoutes;
