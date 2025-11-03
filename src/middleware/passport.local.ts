@@ -48,7 +48,7 @@ const configPassportLocal = () => {
   passport.deserializeUser(async function (user: any, callback) {
     const { id, username } = user;
     // Query to database
-    const userInDB = await getUserWithRoleById(id);
+    const userInDB: any = await getUserWithRoleById(id);
     return callback(null, { ...userInDB });
   });
 };
