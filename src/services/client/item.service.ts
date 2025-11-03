@@ -22,6 +22,41 @@ const addProductToCart = async (quantity: number, productId: number, user: Expre
 
   if (cart) {
     // Update
+    // Cập nhật sum giỏ hàng
+    await prisma.cart.update({
+      where: { id: cart.id },
+      data: {
+        sum: {
+          increment: quantity,
+        },
+      },
+    });
+    // Cập nhật cart-detail
+    // Nếu chưa có, tạo mới. Có rồi, cập nhật quantity
+    // Update + insert
+    const currentCartDetail = await prisma.cartDetail.findFirst({
+      where: {
+        productId: productId,
+        cartId: cart.id,
+      },
+    });
+
+    await prisma.cartDetail.upsert({
+      where: {
+        id: currentCartDetail?.id ?? 0,
+      },
+      update: {
+        quantity: {
+          increment: quantity,
+        },
+      },
+      create: {
+        price: product.price,
+        quantity: quantity,
+        productId: productId,
+        cartId: cart.id,
+      },
+    });
   } else {
     // Create
     await prisma.cart.create({
