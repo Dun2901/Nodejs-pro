@@ -173,12 +173,14 @@
                   }).format(totalPrice) %>
                 </p>
               </div>
-              <button
-                class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                type="button"
-              >
-                Xác nhận thanh toán
-              </button>
+              <form method="get" action="/checkout">
+                <button
+                  class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
+                  type="submit"
+                >
+                  Xác nhận thanh toán
+                </button>
+              </form>
             </div>
           </div>
         </div>
