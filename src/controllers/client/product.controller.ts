@@ -1,5 +1,10 @@
 import { Request, Response } from "express";
-import { addProductToCart, getProductById, getProductInCart } from "services/client/item.service";
+import {
+  addProductToCart,
+  deleteProductInCart,
+  getProductById,
+  getProductInCart,
+} from "services/client/item.service";
 
 const getProductPage = async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -36,4 +41,17 @@ const getCartPage = async (req: Request, res: Response) => {
   });
 };
 
-export { getProductPage, postAddProductToCart, getCartPage };
+const postDeleteProductInCart = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const user = req.user;
+
+  if (user) {
+    await deleteProductInCart(+id, user.id, user.sumCart);
+  } else {
+    return res.redirect("/login");
+  }
+
+  return res.redirect("/cart");
+};
+
+export { getProductPage, postAddProductToCart, getCartPage, postDeleteProductInCart };
