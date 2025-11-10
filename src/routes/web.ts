@@ -8,6 +8,7 @@ import {
   postUpdateUser,
 } from "controllers/user.controllers";
 import {
+  getAdminOrderDetailPage,
   getAdminOrderPage,
   getAdminProductPage,
   getAdminUserPage,
@@ -18,6 +19,7 @@ import {
   getCartPage,
   getCheckOutPage,
   getProductPage,
+  getThanksPage,
   postAddProductToCart,
   postDeleteProductInCart,
   postHandleCartToCheckOut,
@@ -66,6 +68,7 @@ const webRoutes = (app: Express) => {
   router.post("/handle-cart-to-checkout", postHandleCartToCheckOut);
   router.get("/checkout", getCheckOutPage);
   router.post("/place-order", postPlaceOrder);
+  router.get("/thanks", getThanksPage);
 
   // admin routes
   router.get("/admin", getDashboardPage);
@@ -93,6 +96,7 @@ const webRoutes = (app: Express) => {
   );
 
   router.get("/admin/order", getAdminOrderPage);
+  router.get("/admin/order/:id", getAdminOrderDetailPage);
 
   app.use("/", isAdmin, router);
 };

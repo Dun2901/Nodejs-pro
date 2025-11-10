@@ -87,7 +87,14 @@ const postPlaceOrder = async (req: Request, res: Response) => {
   const { receiverName, receiverAddress, receiverPhone, totalPrice } = req.body;
 
   await handlerPlaceOrder(user.id, receiverName, receiverAddress, receiverPhone, +totalPrice);
-  return res.redirect("/checkout");
+  return res.redirect("/thanks");
+};
+
+const getThanksPage = async (req: Request, res: Response) => {
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+
+  return res.render("client/product/thanks.ejs");
 };
 
 export {
@@ -98,4 +105,5 @@ export {
   getCheckOutPage,
   postHandleCartToCheckOut,
   postPlaceOrder,
+  getThanksPage,
 };
