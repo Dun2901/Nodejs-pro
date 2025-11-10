@@ -4,6 +4,7 @@ import {
   deleteProductInCart,
   getProductById,
   getProductInCart,
+  handlerPlaceOrder,
   updateCartDetailBeforeCheckOut,
 } from "services/client/item.service";
 
@@ -80,6 +81,15 @@ const postHandleCartToCheckOut = async (req: Request, res: Response) => {
   return res.redirect("/checkout");
 };
 
+const postPlaceOrder = async (req: Request, res: Response) => {
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+  const { receiverName, receiverAddress, receiverPhone, totalPrice } = req.body;
+
+  await handlerPlaceOrder(user.id, receiverName, receiverAddress, receiverPhone, +totalPrice);
+  return res.redirect("/checkout");
+};
+
 export {
   getProductPage,
   postAddProductToCart,
@@ -87,4 +97,5 @@ export {
   postDeleteProductInCart,
   getCheckOutPage,
   postHandleCartToCheckOut,
+  postPlaceOrder,
 };
