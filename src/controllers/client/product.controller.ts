@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import {
   addProductToCart,
   deleteProductInCart,
+  getOrderHistory,
   getProductById,
   getProductInCart,
   handlerPlaceOrder,
@@ -97,6 +98,16 @@ const getThanksPage = async (req: Request, res: Response) => {
   return res.render("client/product/thanks.ejs");
 };
 
+const getOrderHistoryPage = async (req: Request, res: Response) => {
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+  const orders = await getOrderHistory(user.id);
+
+  return res.render("client/product/order.history.ejs", {
+    orders,
+  });
+};
+
 export {
   getProductPage,
   postAddProductToCart,
@@ -106,4 +117,5 @@ export {
   postHandleCartToCheckOut,
   postPlaceOrder,
   getThanksPage,
+  getOrderHistoryPage,
 };
