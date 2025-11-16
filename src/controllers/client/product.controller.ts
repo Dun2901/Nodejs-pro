@@ -107,6 +107,16 @@ const getOrderHistoryPage = async (req: Request, res: Response) => {
     orders,
   });
 };
+const postAddToCartFromDetailPage = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { quantity } = req.body;
+  const user = req.user;
+  if (!user) return res.redirect("/login");
+
+  await addProductToCart(+quantity, +id, user);
+
+  return res.redirect(`/product/${id}`);
+};
 
 export {
   getProductPage,
@@ -118,4 +128,5 @@ export {
   postPlaceOrder,
   getThanksPage,
   getOrderHistoryPage,
+  postAddToCartFromDetailPage,
 };
