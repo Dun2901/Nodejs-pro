@@ -122,8 +122,14 @@ const deleteProductInCart = async (cartDetailId: number, userId: number, sumCart
   }
 };
 
-const updateCartDetailBeforeCheckOut = async (data: { id: string; quantity: string }[]) => {
+const updateCartDetailBeforeCheckOut = async (
+  data: { id: string; quantity: string }[],
+  cartId: string,
+) => {
+  let quantity = 0;
+
   for (let i = 0; i < data.length; i++) {
+    quantity += +data[i].quantity;
     await prisma.cartDetail.update({
       where: {
         id: +data[i].id,
@@ -133,6 +139,16 @@ const updateCartDetailBeforeCheckOut = async (data: { id: string; quantity: stri
       },
     });
   }
+
+  // Update cart sum
+  await prisma.cart.update({
+    where: {
+      id: +cartId,
+    },
+    data: {
+      sum: quantity,
+    },
+  });
 };
 
 const handlerPlaceOrder = async (
