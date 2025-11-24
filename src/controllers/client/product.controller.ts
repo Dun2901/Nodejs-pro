@@ -90,7 +90,15 @@ const postPlaceOrder = async (req: Request, res: Response) => {
   if (!user) return res.redirect("/login");
   const { receiverName, receiverAddress, receiverPhone, totalPrice } = req.body;
 
-  await handlerPlaceOrder(user.id, receiverName, receiverAddress, receiverPhone, +totalPrice);
+  const message = await handlerPlaceOrder(
+    user.id,
+    receiverName,
+    receiverAddress,
+    receiverPhone,
+    +totalPrice,
+  );
+  if (message) return res.redirect("/checkout");
+
   return res.redirect("/thanks");
 };
 
