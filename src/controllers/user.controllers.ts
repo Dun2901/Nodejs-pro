@@ -11,8 +11,8 @@ import {
 
 const getHomePage = async (req: Request, res: Response) => {
   const products = await getProducts();
-  const user = req.user;
-  console.log(">>> current user: ", user);
+  const { page } = req.query;
+  console.log(">>> current query: ", page);
 
   return res.render("client/home/show.ejs", {
     products,
