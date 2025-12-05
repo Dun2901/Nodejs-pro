@@ -34,10 +34,14 @@ const getProductFilterPage = async (req: Request, res: Response) => {
   const totalPages = await countTotalProductClientPages(8);
 
   const products = await getProducts(currentPage, 6);
-  return res.render("client/product/filter.ejs", {
-    products,
-    totalPages: +totalPages,
-    page: +currentPage,
+  // return res.render("client/product/filter.ejs", {
+  //   products,
+  //   totalPages: +totalPages,
+  //   page: +currentPage,
+  // });
+
+  res.status(200).json({
+    data: products,
   });
 };
 
