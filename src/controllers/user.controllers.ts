@@ -41,22 +41,11 @@ const getProductFilterPage = async (req: Request, res: Response) => {
 
   const totalPages = await countTotalProductClientPages(8);
 
-  // const products = await getProducts(currentPage, 6);
-  // return res.render("client/product/filter.ejs", {
-  //   products,
-  //   totalPages: +totalPages,
-  //   page: +currentPage,
-  // });
-  const { username, minPrice, maxPrice, factory, price, sort } = req.query;
-  // const users = await userFilter(username as string);
-  // const product = await productFilterMinPrice(+minPrice);
-  // const product = await productFilterMaxPrice(+maxPrice);
-  // const product = await productFactory(factory as string);
-  // const product = await filterByPriceRange(price as string);
-  const productSort1 = await productSort(sort as string);
-
-  res.status(200).json({
-    data: productSort1,
+  const products = await getProducts(currentPage, 6);
+  return res.render("client/product/filter.ejs", {
+    products,
+    totalPages: +totalPages,
+    page: +currentPage,
   });
 };
 
