@@ -10,6 +10,114 @@ const userFilter = async (usernameInput: string) => {
   });
 };
 
+const getProductWithFilter = async (
+  page: number,
+  pageSize: number,
+  factory: string,
+  target: string,
+  price: string,
+  sort: string,
+) => {
+  // Build where query
+  let whereClause: any = {};
+
+  if (factory) {
+    const factoryInput = factory.split(",");
+    whereClause.factory = {
+      in: factoryInput,
+    };
+  }
+
+  // whereClause = {
+  //   factory: {...}
+  // }
+
+  if (target) {
+    const targetInput = target.split(",");
+    whereClause.target = {
+      in: targetInput,
+    };
+  }
+
+  //   whereClause = {
+  //        factory: {...},
+  //        target: {...}
+  // }
+
+  if (price) {
+    const priceInput = price.split(",");
+    const priceCondition = [];
+
+    for (let i = 0; i < priceInput.length; i++) {
+      if (priceInput[i] === "duoi-10-trieu") {
+        priceCondition.push({
+          price: {
+            lte: 10000000,
+          },
+        });
+      }
+      if (priceInput[i] === "10-15-trieu") {
+        priceCondition.push({
+          price: {
+            gte: 10000000,
+            lte: 15000000,
+          },
+        });
+      }
+      if (priceInput[i] === "15-20-trieu") {
+        priceCondition.push({
+          price: {
+            gte: 15000000,
+            lte: 20000000,
+          },
+        });
+      }
+      if (priceInput[i] === "tren-20-trieu") {
+        priceCondition.push({
+          price: {
+            gte: 20000000,
+          },
+        });
+      }
+    }
+
+    whereClause.OR = priceCondition;
+  }
+
+  // Build sort query
+  let orderByClause: any = {};
+  if (sort) {
+    if (sort === "gia-tang-dan") {
+      orderByClause = {
+        price: "asc",
+      };
+    }
+    if (sort === "gia-giam-dan") {
+      orderByClause = {
+        price: "desc",
+      };
+    }
+  }
+  const skip = (page - 1) * pageSize;
+
+  const [products, count] = await prisma.$transaction([
+    prisma.product.findMany({
+      skip: skip,
+      take: pageSize,
+      where: whereClause,
+      orderBy: orderByClause,
+    }),
+    prisma.product.count({ where: whereClause }),
+  ]);
+
+  const totalPages = Math.ceil(count / pageSize);
+
+  return {
+    products,
+    totalPages,
+  };
+};
+
 /*
 Yêu cầu 1: http://localhost:8080/products?minPrice=1000000
 Lấy ra tất cả sản phẩm có giá (price) tối thiểu là 1.000.000 (vnd)
@@ -79,6 +187,7 @@ const productFactory = async (factory: string) => {
 //     },
 //   });
 // };
+
 const parsePriceRanges = (rangesStr: string) => {
   const ranges = rangesStr.split(","); // ["10-toi-15-trieu", "16-toi-20-trieu"]
 
@@ -124,11 +233,4 @@ const productSort = async (sort: string) => {
   });
 };
 
-export {
-  userFilter,
-  productFilterMinPrice,
-  productFilterMaxPrice,
-  productFactory,
-  filterByPriceRange,
-  productSort,
-};
+export { userFilter, getProductWithFilter };
