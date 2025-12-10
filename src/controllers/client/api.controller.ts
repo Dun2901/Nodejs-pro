@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { handleGetAllUser } from "services/client/api.service";
 import { addProductToCart } from "services/client/item.service";
 
 const postAddProductToCartAPI = async (req: Request, res: Response) => {
@@ -15,4 +16,11 @@ const postAddProductToCartAPI = async (req: Request, res: Response) => {
   });
 };
 
-export { postAddProductToCartAPI };
+const getAllUsersAPI = async (req: Request, res: Response) => {
+  const users = await handleGetAllUser();
+  res.status(200).json({
+    data: users,
+  });
+};
+
+export { postAddProductToCartAPI, getAllUsersAPI };
