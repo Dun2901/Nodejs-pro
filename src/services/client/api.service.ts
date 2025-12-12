@@ -26,4 +26,10 @@ const handleUpdateUserById = async (
   });
 };
 
-export { handleGetAllUser, handleGetUserById, handleUpdateUserById };
+const handleDeleteUserById = async (id: number) => {
+  return await prisma.user.delete({
+    where: { id },
+  });
+};
+
+export { handleGetAllUser, handleGetUserById, handleUpdateUserById, handleDeleteUserById };

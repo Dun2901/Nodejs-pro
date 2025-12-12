@@ -1,5 +1,6 @@
 import {
   createUsersAPI,
+  deleteUserByIdAPI,
   getAllUsersAPI,
   getUserByIdAPI,
   postAddProductToCartAPI,
@@ -17,6 +18,8 @@ const apiRoutes = (app: Express) => {
 
   router.post("/users", createUsersAPI);
   router.put("/users/:id", updateUserByIdAPI);
+
+  router.delete("/users/:id", deleteUserByIdAPI);
 
   app.use("/api", router);
 };
