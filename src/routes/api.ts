@@ -3,6 +3,7 @@ import {
   getAllUsersAPI,
   getUserByIdAPI,
   postAddProductToCartAPI,
+  updateUserByIdAPI,
 } from "controllers/client/api.controller";
 import express, { Express } from "express";
 
@@ -15,6 +16,7 @@ const apiRoutes = (app: Express) => {
   router.get("/users/:id", getUserByIdAPI);
 
   router.post("/users", createUsersAPI);
+  router.put("/users/:id", updateUserByIdAPI);
 
   app.use("/api", router);
 };

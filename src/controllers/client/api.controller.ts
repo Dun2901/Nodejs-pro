@@ -1,5 +1,9 @@
 import { Request, Response } from "express";
-import { handleGetAllUser, handleGetUserById } from "services/client/api.service";
+import {
+  handleGetAllUser,
+  handleGetUserById,
+  handleUpdateUserById,
+} from "services/client/api.service";
 import { registerNewUser } from "services/client/auth.service";
 import { addProductToCart } from "services/client/item.service";
 import { RegisterSchema, TRegisterSchema } from "src/validation/register.schema";
@@ -56,4 +60,21 @@ const createUsersAPI = async (req: Request, res: Response) => {
   });
 };
 
-export { postAddProductToCartAPI, getAllUsersAPI, getUserByIdAPI, createUsersAPI };
+const updateUserByIdAPI = async (req: Request, res: Response) => {
+  const { fullName, address, phone } = req.body;
+  const { id } = req.params;
+
+  await handleUpdateUserById(+id, fullName, address, phone);
+
+  res.status(200).json({
+    data: "Update user succeed",
+  });
+};
+
+export {
+  postAddProductToCartAPI,
+  getAllUsersAPI,
+  getUserByIdAPI,
+  createUsersAPI,
+  updateUserByIdAPI,
+};

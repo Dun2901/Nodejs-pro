@@ -10,4 +10,20 @@ const handleGetUserById = async (id: number) => {
   });
 };
 
-export { handleGetAllUser, handleGetUserById };
+const handleUpdateUserById = async (
+  id: number,
+  fullName: string,
+  address: string,
+  phone: string,
+) => {
+  return await prisma.user.update({
+    where: { id },
+    data: {
+      fullName,
+      address,
+      phone,
+    },
+  });
+};
+
+export { handleGetAllUser, handleGetUserById, handleUpdateUserById };
