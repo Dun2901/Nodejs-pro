@@ -3,6 +3,7 @@ import {
   deleteUserByIdAPI,
   getAllUsersAPI,
   getUserByIdAPI,
+  loginAPI,
   postAddProductToCartAPI,
   updateUserByIdAPI,
 } from "controllers/client/api.controller";
@@ -15,11 +16,10 @@ const apiRoutes = (app: Express) => {
 
   router.get("/users", getAllUsersAPI);
   router.get("/users/:id", getUserByIdAPI);
-
   router.post("/users", createUsersAPI);
   router.put("/users/:id", updateUserByIdAPI);
-
   router.delete("/users/:id", deleteUserByIdAPI);
+  router.post("/login", loginAPI);
 
   app.use("/api", router);
 };
