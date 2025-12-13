@@ -41,6 +41,9 @@ const handleUserLogin = async (username: string, password: string) => {
     where: {
       username: username,
     },
+    include: {
+      role: true,
+    },
   });
   if (!user) {
     // Throw error
@@ -58,7 +61,9 @@ const handleUserLogin = async (username: string, password: string) => {
     id: user.id,
     username: user.username,
     roleId: user.roleId,
+    role: user.role,
     accountType: user.accountType,
+    avatar: user.avatar,
   };
   const secret = process.env.JWT_SECRET;
   const expiresIn: any = process.env.JWT_EXPIRES_IN;

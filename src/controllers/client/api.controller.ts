@@ -103,6 +103,15 @@ const loginAPI = async (req: Request, res: Response) => {
   }
 };
 
+const fetchAccountAPI = async (req: Request, res: Response) => {
+  const user = req.user;
+  res.status(200).json({
+    data: {
+      user,
+    },
+  });
+};
+
 export {
   postAddProductToCartAPI,
   getAllUsersAPI,
@@ -111,4 +120,5 @@ export {
   updateUserByIdAPI,
   deleteUserByIdAPI,
   loginAPI,
+  fetchAccountAPI,
 };

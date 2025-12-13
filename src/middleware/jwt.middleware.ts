@@ -3,6 +3,12 @@ import jwt from "jsonwebtoken";
 import "dotenv/config";
 
 const checkValidJWT = (req: Request, res: Response, next: NextFunction) => {
+  const path = req.path;
+  const whiteList = ["/add-product-to-cart", "/login"];
+
+  const isWhiteList = whiteList.some(route => route === path);
+  if (isWhiteList) return next();
+
   const token = req.headers["authorization"]?.split(" ")[1];
 
   try {
@@ -17,6 +23,7 @@ const checkValidJWT = (req: Request, res: Response, next: NextFunction) => {
       accountType: dataDecoded.accountType,
       avatar: dataDecoded.avatar,
       roleId: dataDecoded.roleId,
+      role: dataDecoded.role,
     };
     next();
   } catch (error) {
