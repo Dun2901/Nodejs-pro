@@ -1,5 +1,6 @@
 const express = require("express");
 // import express from "express";
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -9,6 +10,9 @@ const hostname = process.env.HOST_NAME;
 // config view engine
 app.set("view engine", "ejs");
 app.set("views", __dirname + "/views");
+
+// config static files: images/css/js
+app.use(express.static(path.join(__dirname, "public")));
 
 // route
 app.get("/", (req, res) => {
