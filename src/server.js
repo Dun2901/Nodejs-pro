@@ -12,7 +12,7 @@ app.set("views", __dirname + "/views");
 
 // route
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello World and nodemon");
 });
 
 app.get("/test", (req, res) => {
