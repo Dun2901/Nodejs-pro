@@ -38,7 +38,6 @@
     </div>
     <div class="table-container">
       <div class="title">List Users</div>
-      <%= JSON.stringify(listUser)%>
       <table>
         <tr>
           <th>ID</th>
@@ -47,21 +46,19 @@
           <th>City</th>
           <th>Actions</th>
         </tr>
+
+        <% listUser.forEach(function(user) { %>
         <tr>
-          <td>Peter</td>
-          <td>Griffin</td>
-          <td>$100</td>
-          <td>$100</td>
+          <td><%= user.id%></td>
+          <td><%= user.email%></td>
+          <td><%= user.name%></td>
+          <td><%= user.city%></td>
           <td>
             <button>Edit</button>
             <button>Delete</button>
           </td>
         </tr>
-        <tr>
-          <td>Lois</td>
-          <td>Griffin</td>
-          <td>$150</td>
-        </tr>
+        <% }); %>
       </table>
     </div>
   </body>
