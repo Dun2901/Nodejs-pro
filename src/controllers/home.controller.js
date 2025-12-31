@@ -36,6 +36,9 @@ const getCreatePage = (req, res) => {
 };
 
 const getUpdatePage = (req, res) => {
+  const { id } = req.params;
+  console.log(">>> req.params: ", req.params);
+
   return res.render("edit.ejs");
 };
 
