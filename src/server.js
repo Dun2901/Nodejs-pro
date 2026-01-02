@@ -18,9 +18,14 @@ configViewEngine(app);
 // route
 app.use("/", webRoutes);
 
-// test connection
-connection();
-
-app.listen(port, hostname, () => {
-  console.log(`Example app listening on port ${port}`);
-});
+(async () => {
+  // test connection
+  try {
+    await connection();
+    app.listen(port, hostname, () => {
+      console.log(`Example app listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log(">>> Error connect to DB");
+  }
+})();
