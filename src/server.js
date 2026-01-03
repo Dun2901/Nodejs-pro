@@ -18,9 +18,6 @@ configViewEngine(app);
 // route
 app.use("/", webRoutes);
 
-const cat = new Kitten({ name: "dung cat" });
-cat.save();
-
 (async () => {
   // test connection
   try {
