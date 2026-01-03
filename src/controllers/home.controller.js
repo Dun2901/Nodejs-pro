@@ -8,8 +8,7 @@ const {
 } = require("../services/CRUDService");
 
 const getHomePage = async (req, res) => {
-  const results = [];
-  console.log(">>> check rows: ", results);
+  const results = await User.find({});
   return res.render("home.ejs", { listUser: results });
 };
 
