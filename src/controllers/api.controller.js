@@ -3,11 +3,28 @@ const User = require("../models/user");
 const getUsersAPI = async (req, res) => {
   const results = await User.find({});
   return res.status(200).json({
-    errorCode: 0,
+    EC: 0,
     data: results,
+  });
+};
+
+const postCreateUserAPI = async (req, res) => {
+  const { email, name, city } = req.body;
+  console.log(">>> check req.body: ", req.body);
+
+  const user = await User.create({
+    email,
+    name,
+    city,
+  });
+
+  return res.status(200).json({
+    EC: 0,
+    data: user,
   });
 };
 
 module.exports = {
   getUsersAPI,
+  postCreateUserAPI,
 };
