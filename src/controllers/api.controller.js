@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const { uploadSingleFile } = require("../services/file.service");
 
 const getUsersAPI = async (req, res) => {
   const results = await User.find({});
@@ -48,9 +49,17 @@ const deleteUserAPI = async (req, res) => {
   });
 };
 
+const postUploadSingleFileAPI = async (req, res) => {
+  const result = await uploadSingleFile(req?.files?.name ?? "hoidanit");
+  console.log(">>> check result: ", result);
+
+  return res.send("okk single file");
+};
+
 module.exports = {
   getUsersAPI,
   postCreateUserAPI,
   putUpdateUserAPI,
   deleteUserAPI,
+  postUploadSingleFileAPI,
 };
